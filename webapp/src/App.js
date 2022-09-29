@@ -5,7 +5,9 @@ import { useState, useEffect } from 'react'
 import { v4 as uuidv4 } from 'uuid';
 import config from './config';
 import Header from './Components/Header';
-import {Button, TextField} from '@mui/material';
+import {Button, TextField, List, ListItem, IconButton, Icon} from '@mui/material';
+import AddIcon from '@mui/icons-material/Add';
+import Add from '@mui/icons-material/Add';
 
 function App() {
   const app = initializeApp(config);
@@ -43,24 +45,29 @@ function App() {
       <Header/>
       <div className="Home-Page">
         <div className="TaskAdd">
-            <TextField onChange={e => setTaskName(e.target.value)} />
-            <Button style={buttonStyle} variant="contained" onClick={addTask}>Add</Button>
+            <TextField style={textFieldStyle} onChange={e => setTaskName(e.target.value)} />
+            <IconButton style={buttonStyle} onClick={addTask}> 
+              <AddIcon />
+            </IconButton>
         </div>
-        <div className="Tasklist">
+        <List className="Tasklist">
           {dataLoaded && taskList.map(x => 
-            <li key={x.key}>{x.taskName}</li>
+            <ListItem key={x.key}>{x.taskName}</ListItem>
           )}
-        </div>
+        </List>
       </div>
     </div>
   );
 }
 
 const buttonStyle = {
-  display: 'flex',
   backgroundColor: '#000000',
-  margin: '10px 0',
-  height: '100%',
-  maxWidth: '500px'
+  color: 'white',
+  margin: '10px 10px',
 }
+
+const textFieldStyle = {
+  width: '100%'
+}
+
 export default App;
