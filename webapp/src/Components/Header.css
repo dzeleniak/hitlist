@@ -1,0 +1,12 @@
+.Navbar {
+    height: 80px;
+    background-color: #212121;
+    color: #fff;
+    font-size: 2rem;
+    display: flex;
+    align-items: center;
+}
+
+.Navbar-Title {
+    padding: 0px 20px;
+}

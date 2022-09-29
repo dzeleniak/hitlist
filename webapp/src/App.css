@@ -1,0 +1,9 @@
+.Home-Page {
+    padding: 20px;
+}
+
+.TaskAdd {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}

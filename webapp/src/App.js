@@ -4,27 +4,25 @@ import { getDatabase, ref, set, onValue, get } from 'firebase/database';
 import { useState, useEffect } from 'react'
 import { v4 as uuidv4 } from 'uuid';
 import config from './config';
-
-
+import Header from './Components/Header';
+import {Button, TextField} from '@mui/material';
 
 function App() {
   const app = initializeApp(config);
   const db = getDatabase(app);
 
   const [taskName, setTaskName] = useState("");
-  const [taskList, setTaskList] = useState(null);
+  const [taskList, setTaskList] = useState([]);
   const [dataLoaded, setDataLoaded] = useState(false);
 
   const getTask = () => {
-    get(ref(db, 'tasks')).then((snapshot) => {
-      if(snapshot.exists()) {
-        const data = snapshot.val();
-        const tasks = Object.values(data);
-        setTaskList(tasks);
-      }
-    });
-
-    console.log(taskList);
+    onValue(ref(db, 'tasks'), (data) => {
+      const list = [];
+      data.forEach(x => {
+        list.push({...x.val(), key: x.key});
+      })
+      setTaskList([...list]);
+    })
   }
 
   const addTask = () => {
@@ -42,18 +40,27 @@ function App() {
 
   return (
     <div className="App">
-      <div >
-          <label for="TaskName">Task Name</label><br/>
-          <input onChange={e => setTaskName(e.target.value)} type="text" name="TaskName" id="taskName" /><br/>
-          <button onClick={addTask}>Click</button>
-      </div>
-      <div>
-        {dataLoaded && taskList.map(x => 
-          <li key={uuidv4()}>{x.taskName}</li>
-        )}
+      <Header/>
+      <div className="Home-Page">
+        <div className="TaskAdd">
+            <TextField onChange={e => setTaskName(e.target.value)} />
+            <Button style={buttonStyle} variant="contained" onClick={addTask}>Add</Button>
+        </div>
+        <div className="Tasklist">
+          {dataLoaded && taskList.map(x => 
+            <li key={x.key}>{x.taskName}</li>
+          )}
+        </div>
       </div>
     </div>
   );
 }
 
+const buttonStyle = {
+  display: 'flex',
+  backgroundColor: '#000000',
+  margin: '10px 0',
+  height: '100%',
+  maxWidth: '500px'
+}
 export default App;
