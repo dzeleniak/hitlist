@@ -36,6 +36,10 @@ function App() {
     getTask();
   }
 
+  const completeTask = (id) => {
+    set(ref(db, 'tasks/' + id + '/completed'), true);
+  }
+
   useEffect(()=> {
     getTask();
     setDataLoaded(true);
@@ -54,14 +58,16 @@ function App() {
         <div className='TaskList'>
           <List style={listStyle}>
             {dataLoaded && taskList.map(x => 
-                <ListItem style={listItemStyle} key={x.key}>
-                  <IconButton style={listItemButtonStyle}>
-                    <CheckIcon />
-                  </IconButton>
-                  <div style={listItemTextStyle}>
-                    {x.taskName}
-                  </div>
-                </ListItem>
+                !x.completed && (
+                  <ListItem style={listItemStyle} key={x.key}>
+                    <IconButton style={listItemButtonStyle} onClick={() => completeTask(x.key)}>
+                      <CheckIcon />
+                    </IconButton>
+                    <div style={listItemTextStyle}>
+                      {x.taskName}
+                    </div>
+                  </ListItem>
+                )
             )}
           </List>
         </div>
