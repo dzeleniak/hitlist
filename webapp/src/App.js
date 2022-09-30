@@ -7,8 +7,8 @@ import config from './config';
 import Header from './Components/Header';
 import {Button, TextField, List, ListItem, IconButton, Icon} from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
-import Add from '@mui/icons-material/Add';
 import CheckIcon from '@mui/icons-material/Check'
+import Style from './AppStyle';
 
 function App() {
   const app = initializeApp(config);
@@ -50,20 +50,20 @@ function App() {
       <Header/>
       <div className="Home-Page">
         <div className="TaskAdd">
-            <TextField style={textFieldStyle} onChange={e => setTaskName(e.target.value)} />
-            <IconButton style={buttonStyle} onClick={addTask}> 
+            <TextField style={Style.textFieldStyle} onChange={e => setTaskName(e.target.value)} />
+            <IconButton style={Style.buttonStyle} onClick={addTask}> 
               <AddIcon />
             </IconButton>
         </div>
         <div className='TaskList'>
-          <List style={listStyle}>
+          <List style={Style.listStyle}>
             {dataLoaded && taskList.map(x => 
                 !x.completed && (
-                  <ListItem style={listItemStyle} key={x.key}>
-                    <IconButton style={listItemButtonStyle} onClick={() => completeTask(x.key)}>
+                  <ListItem style={Style.listItemStyle} key={x.key}>
+                    <IconButton style={Style.listItemButtonStyle} onClick={() => completeTask(x.key)}>
                       <CheckIcon />
                     </IconButton>
-                    <div style={listItemTextStyle}>
+                    <div style={Style.listItemTextStyle}>
                       {x.taskName}
                     </div>
                   </ListItem>
@@ -74,36 +74,6 @@ function App() {
       </div>
     </div>
   );
-}
-
-const buttonStyle = {
-  backgroundColor: '#000000',
-  color: 'white',
-  margin: '10px 10px',
-}
-
-const textFieldStyle = {
-  width: '100%'
-}
-
-const listStyle = {
-  display: 'flex',
-  flexDirection: 'column'
-}
-
-const listItemStyle = {
-  backgroundColor: '#EEE',
-  margin: '10px 0px',
-  padding: '10px',
-  borderRadius: '10px',
-}
-
-const listItemTextStyle = {
-  margin: '0 10px',
-}
-
-const listItemButtonStyle = {
-  backgroundColor: '#DDD'
 }
 
 export default App;
