@@ -8,6 +8,7 @@ import Header from './Components/Header';
 import {Button, TextField, List, ListItem, IconButton, Icon} from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import Add from '@mui/icons-material/Add';
+import CheckIcon from '@mui/icons-material/Check'
 
 function App() {
   const app = initializeApp(config);
@@ -50,11 +51,20 @@ function App() {
               <AddIcon />
             </IconButton>
         </div>
-        <List className="Tasklist">
-          {dataLoaded && taskList.map(x => 
-            <ListItem key={x.key}>{x.taskName}</ListItem>
-          )}
-        </List>
+        <div className='TaskList'>
+          <List style={listStyle}>
+            {dataLoaded && taskList.map(x => 
+                <ListItem style={listItemStyle} key={x.key}>
+                  <IconButton style={listItemButtonStyle}>
+                    <CheckIcon />
+                  </IconButton>
+                  <div style={listItemTextStyle}>
+                    {x.taskName}
+                  </div>
+                </ListItem>
+            )}
+          </List>
+        </div>
       </div>
     </div>
   );
@@ -68,6 +78,26 @@ const buttonStyle = {
 
 const textFieldStyle = {
   width: '100%'
+}
+
+const listStyle = {
+  display: 'flex',
+  flexDirection: 'column'
+}
+
+const listItemStyle = {
+  backgroundColor: '#EEE',
+  margin: '10px 0px',
+  padding: '10px',
+  borderRadius: '10px',
+}
+
+const listItemTextStyle = {
+  margin: '0 10px',
+}
+
+const listItemButtonStyle = {
+  backgroundColor: '#DDD'
 }
 
 export default App;
