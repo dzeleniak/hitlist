@@ -7,7 +7,7 @@ import AddIcon from '@mui/icons-material/Add';
 import CheckIcon from '@mui/icons-material/Check'
 import Style from './Style';
 
-export default function TaskList() {
+export default function TaskList({selectedList}) {
 
   const db = getDatabase();
 
@@ -26,9 +26,11 @@ export default function TaskList() {
   }
 
   const addTask = () => {
+    console.log(selectedList);
     set(ref(db, 'tasks/' + uuidv4()),{
       taskName, 
-      completed: false
+      completed: false,
+      taskList: selectedList,
     });
     getTask();
   }
@@ -41,6 +43,7 @@ export default function TaskList() {
     getTask();
     setDataLoaded(true);
   }, [])
+  
   return (
     <div style={Style.ContainerStyle}>
         <div style={Style.taskAddStyle}>
@@ -51,7 +54,7 @@ export default function TaskList() {
         </div>
         <List style={Style.taskListStyle}>
           {dataLoaded && taskList.map(x => 
-              !x.completed && (
+              (x.taskList === selectedList && !x.completed) && (
                 <ListItem style={Style.listItemStyle} key={x.key}>
                   <IconButton style={Style.listItemButtonStyle} onClick={() => completeTask(x.key)}>
                     <CheckIcon />

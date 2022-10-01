@@ -16,18 +16,23 @@ function App() {
   const db = getDatabase(app);
 
   const [showCollections, setShowCollections] = useState(false);
+  const [selectedList, setSelectedList] = useState("default");
 
   const toggleShowCollections = () => {
     const val = showCollections
     setShowCollections(!val);
   }
 
+  const changeSelectedList = (x) => {
+    setSelectedList(x);
+  }
+
   return (
     <div className="App">
       <Header toggle={toggleShowCollections} />
       <div className="Main-Container">
-        {showCollections && <Collections />}
-        <TaskList/>
+        {showCollections && <Collections changeSelectedList={changeSelectedList}/>}
+        <TaskList selectedList={selectedList}/>
       </div>
     </div>
   );
