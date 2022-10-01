@@ -1,19 +1,8 @@
-.Home-Page {
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+.App {
+    height: 100vh;
 }
-
-.TaskAdd {
+.Main-Container {
+    height: 100%;
     display: flex;
     flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    width: 500px;
-}
-
-.TaskList {
-    width: 500px;
 }
