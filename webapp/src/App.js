@@ -3,37 +3,30 @@ import { initializeApp } from 'firebase/app';
 import { getDatabase, ref, set, onValue, get } from 'firebase/database';
 import { useState, useEffect } from 'react'
 import { v4 as uuidv4 } from 'uuid';
-import config from './config';
 import {Button, TextField, List, ListItem, IconButton, Icon} from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import CheckIcon from '@mui/icons-material/Check'
 import Header from './Components/Header/Header';
 import Collections from './Components/Collections/Collections';
 import TaskList from './Components/TaskList/TaskList';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Login from './Auth/Login'
+import Register from "./Auth/Register";
+import Reset from "./Auth/Reset";
+import Dashboard from "./Dashboard";
 
 function App() {
-  const app = initializeApp(config);
-  const db = getDatabase(app);
-
-  const [showCollections, setShowCollections] = useState(false);
-  const [selectedList, setSelectedList] = useState("default");
-
-  const toggleShowCollections = () => {
-    const val = showCollections
-    setShowCollections(!val);
-  }
-
-  const changeSelectedList = (x) => {
-    setSelectedList(x);
-  }
 
   return (
     <div className="App">
-      <Header toggle={toggleShowCollections} />
-      <div className="Main-Container">
-        {showCollections && <Collections changeSelectedList={changeSelectedList}/>}
-        <TaskList selectedList={selectedList}/>
-      </div>
+      <Router>
+        <Routes>
+          <Route exact path="/" element={<Login/>} />
+          <Route exact path="/register" element={<Register/>} />
+          <Route exact path="/reset" element={<Reset />} />
+          <Route exact path="/dashboard" element={<Dashboard />} />
+        </Routes>
+      </Router>
     </div>
   );
 
