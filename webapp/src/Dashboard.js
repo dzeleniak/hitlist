@@ -26,18 +26,21 @@ function Dashboard() {
     setShowCollections(!val);
   }
 
+  const signOut = () => {
+    logout();
+    return navigate("/");
+  }
+
   const changeSelectedList = (x) => {
     setSelectedList(x);
   }
 
   return (
     <div className="dashboard">
-        <Header toggle={toggleShowCollections} />
-        <button onClick={() => logout()}>Logout</button>
-
+        <Header toggle={toggleShowCollections} signOut={signOut} />
         <div className="Main-Container">
             {showCollections && <Collections changeSelectedList={changeSelectedList}/>}
-            <TaskList selectedList={selectedList}/>
+            <TaskList selectedList={selectedList} uid={user.uid}/>
         </div>
      </div>
   );

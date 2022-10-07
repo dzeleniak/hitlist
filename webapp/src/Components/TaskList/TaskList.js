@@ -7,7 +7,7 @@ import AddIcon from '@mui/icons-material/Add';
 import CheckIcon from '@mui/icons-material/Check'
 import Style from './Style';
 
-export default function TaskList({selectedList}) {
+export default function TaskList({selectedList, uid}) {
 
   const db = getDatabase();
 
@@ -31,6 +31,7 @@ export default function TaskList({selectedList}) {
       taskName, 
       completed: false,
       taskList: selectedList,
+      uid: uid
     });
     getTask();
   }
@@ -54,7 +55,7 @@ export default function TaskList({selectedList}) {
         </div>
         <List style={Style.taskListStyle}>
           {dataLoaded && taskList.map(x => 
-              (x.taskList === selectedList && !x.completed) && (
+              (x.uid === uid && x.taskList === selectedList && !x.completed) && (
                 <ListItem style={Style.listItemStyle} key={x.key}>
                   <IconButton style={Style.listItemButtonStyle} onClick={() => completeTask(x.key)}>
                     <CheckIcon />
